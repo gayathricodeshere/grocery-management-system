@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block page_title %}Products{% endblock %}
+{% block content %}
+
+<div class="card">
+  <div class="card-title" style="justify-content:space-between">
+    📦 Product Inventory
+    <a href="{{ url_for('add_product') }}" class="btn btn-primary">➕ Add Product</a>
+  </div>
+
+  <form method="GET" class="search-bar">
+    <input type="text" name="search" placeholder="🔍 Search by name or supplier..." value="{{ search }}">
+    <select name="category">
+      <option value="">All Categories</option>
+      {% for cat in categories %}
+        <option value="{{ cat }}" {{ 'selected' if selected_category == cat }}>{{ cat }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-primary">Search</button>
+    <a href="{{ url_for('products') }}" class="btn" style="background:#f5f5f5; color:#555">Clear</a>
+  </form>
+
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th><th>Product Name</th><th>Category</th><th>Quantity</th>
+        <th>Price/Unit</th><th>Total Value</th><th>Expiry</th><th>Supplier</th>
+        <th>Status</th><th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for p in products %}
+    <tr>
+      <td style="color:#aaa">{{ loop.index }}</td>
+      <td><strong>{{ p.name }}</strong></td>
+      <td><span style="background:#e8f5e9; color:#2e7d32; padding:2px 10px; border-radius:12px; font-size:0.8rem; font-weight:600">{{ p.category }}</span></td>
+      <td>
+        <strong style="{% if p.status == 'low' %}color:#e65100{% elif p.status == 'expired' %}color:#c62828{% endif %}">
+          {{ p.quantity }} {{ p.unit }}
+        </strong>
+        <br><small style="color:#aaa">Min: {{ p.min_stock }}</small>
+      </td>
+      <td>₹{{ p.price }}</td>
+      <td>₹{{ "%.2f"|format(p.quantity * p.price) }}</td>
+      <td>
+        <span style="{% if p.expiry < today %}color:#c62828; font-weight:700{% endif %}">{{ p.expiry }}</span>
+      </td>
+      <td style="font-size:0.85rem">{{ p.supplier }}</td>
+      <td>
+        {% if p.status == 'expired' %}
+          <span class="status expired">Expired</span>
+        {% elif p.status == 'low' %}
+          <span class="status low">Low Stock</span>
+        {% else %}
+          <span class="status ok">Good</span>
+        {% endif %}
+      </td>
+      <td>
+        <div style="display:flex; flex-direction:column; gap:5px;">
+          <a href="{{ url_for('edit_product', product_id=p.id) }}" class="btn btn-edit btn-sm">✏️ Edit</a>
+          <form method="POST" action="{{ url_for('delete_product', product_id=p.id) }}" onsubmit="return confirm('Delete {{ p.name }}?')">
+            <button class="btn btn-danger btn-sm" style="width:100%">🗑️ Delete</button>
+          </form>
+          <form method="POST" action="{{ url_for('restock', product_id=p.id) }}" class="restock-form">
+            <input type="number" name="qty" placeholder="Qty" min="0.1" step="0.1" required>
+            <button type="submit" class="btn btn-orange btn-sm">+</button>
+          </form>
+        </div>
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="10" style="text-align:center; padding:30px; color:#aaa">No products found.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <div style="margin-top:12px; font-size:0.85rem; color:#888">
+    Showing {{ products|length }} product(s)
+  </div>
+</div>
+{% endblock %}

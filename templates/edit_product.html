@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block page_title %}Edit Product{% endblock %}
+{% block content %}
+<div class="card" style="max-width:720px; margin:0 auto;">
+  <div class="card-title">✏️ Edit Product — {{ product.name }}</div>
+  <form method="POST">
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Product Name *</label>
+        <input type="text" name="name" value="{{ product.name }}" required>
+      </div>
+      <div class="form-group">
+        <label>Category *</label>
+        <select name="category" required>
+          {% for cat in categories %}
+            <option value="{{ cat }}" {{ 'selected' if cat == product.category }}>{{ cat }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Quantity *</label>
+        <input type="number" name="quantity" value="{{ product.quantity }}" min="0" step="0.01" required>
+      </div>
+      <div class="form-group">
+        <label>Unit *</label>
+        <select name="unit" required>
+          {% for u in units %}
+            <option value="{{ u }}" {{ 'selected' if u == product.unit }}>{{ u }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Price per Unit (₹) *</label>
+        <input type="number" name="price" value="{{ product.price }}" min="0" step="0.01" required>
+      </div>
+      <div class="form-group">
+        <label>Minimum Stock Level *</label>
+        <input type="number" name="min_stock" value="{{ product.min_stock }}" min="0" step="0.01" required>
+      </div>
+      <div class="form-group">
+        <label>Expiry Date *</label>
+        <input type="date" name="expiry" value="{{ product.expiry }}" required>
+      </div>
+      <div class="form-group">
+        <label>Supplier *</label>
+        <input type="text" name="supplier" value="{{ product.supplier }}" required>
+      </div>
+    </div>
+    <div style="margin-top:24px; display:flex; gap:12px;">
+      <button type="submit" class="btn btn-primary">💾 Save Changes</button>
+      <a href="{{ url_for('products') }}" class="btn" style="background:#f5f5f5; color:#555">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

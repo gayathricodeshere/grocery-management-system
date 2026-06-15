@@ -1,0 +1,71 @@
+{
+  "next_id": 7,
+  "products": [
+    {
+      "id": 1,
+      "name": "Basmati Rice",
+      "category": "Grains",
+      "quantity": 50,
+      "unit": "kg",
+      "price": 85.0,
+      "expiry": "2025-12-31",
+      "supplier": "FreshFarm Co.",
+      "min_stock": 10
+    },
+    {
+      "id": 2,
+      "name": "Toor Dal",
+      "category": "Pulses",
+      "quantity": 30,
+      "unit": "kg",
+      "price": 120.0,
+      "expiry": "2025-10-15",
+      "supplier": "Organic Farms",
+      "min_stock": 5
+    },
+    {
+      "id": 3,
+      "name": "Sunflower Oil",
+      "category": "Oils",
+      "quantity": 20,
+      "unit": "litre",
+      "price": 150.0,
+      "expiry": "2025-08-20",
+      "supplier": "GoldSun Ltd.",
+      "min_stock": 5
+    },
+    {
+      "id": 4,
+      "name": "Tomatoes",
+      "category": "Vegetables",
+      "quantity": 15,
+      "unit": "kg",
+      "price": 40.0,
+      "expiry": "2024-07-10",
+      "supplier": "Local Market",
+      "min_stock": 10
+    },
+    {
+      "id": 5,
+      "name": "Milk",
+      "category": "Dairy",
+      "quantity": 8,
+      "unit": "litre",
+      "price": 55.0,
+      "expiry": "2024-07-05",
+      "supplier": "Amul",
+      "min_stock": 20
+    },
+    {
+      "id": 6,
+      "name": "Wheat Flour",
+      "category": "Grains",
+      "quantity": 40,
+      "unit": "kg",
+      "price": 45.0,
+      "expiry": "2025-06-30",
+      "supplier": "Ashirvaad",
+      "min_stock": 15
+    }
+  ]
+}
